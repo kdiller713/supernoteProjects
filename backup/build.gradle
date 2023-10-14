@@ -1,9 +1,10 @@
 
 plugins {
     id "java"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
-group "backup"
+group "supernote-backup"
 version = "0.1"
 
 ext {
@@ -27,10 +28,6 @@ jar {
 
     manifest {
         attributes "Main-Class": "$mainApplicationClass"
-    }
-
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
