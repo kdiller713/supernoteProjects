@@ -95,14 +95,14 @@ public class BackupTask implements Runnable {
             JSONObject directoryContent = directoryContents.getJSONObject(i);
             
             if(directoryContent.getBoolean("isDirectory")){
-                getFilesRecursively(directoryContent.getString("path"), outputStream);
+                getFilesRecursively(directoryContent.getString("uri"), outputStream);
             }else{
-                statusUpdate("Downloading " + directoryContent.getString("path"));
+                statusUpdate("Downloading " + directoryContent.getString("uri"));
                 
                 try(
-                    BufferedInputStream in = new BufferedInputStream(new URL((baseUrl + directoryContent.getString("path")).replaceAll(" ", "%20")).openStream())
+                    BufferedInputStream in = new BufferedInputStream(new URL((baseUrl + directoryContent.getString("uri")).replaceAll(" ", "%20")).openStream())
                 ){
-                    outputStream.putNextEntry(new ZipEntry(directoryContent.getString("path")));
+                    outputStream.putNextEntry(new ZipEntry(directoryContent.getString("uri")));
                     
                     byte dataBuffer[] = new byte[1024];
                     int bytesRead;
@@ -110,7 +110,7 @@ public class BackupTask implements Runnable {
                         outputStream.write(dataBuffer, 0, bytesRead);
                     }
                 }catch(Exception e){
-                    logger.error("Error writing file '" + directoryContent.getString("path") + "'", e);
+                    logger.error("Error writing file '" + directoryContent.getString("uri") + "'", e);
                     throw new Exception(e);
                 }
             }

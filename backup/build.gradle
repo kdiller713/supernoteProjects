@@ -5,7 +5,7 @@ plugins {
 }
 
 group "supernote-backup"
-version = "0.1"
+version = "0.2"
 
 ext {
     mainApplicationClass = "com.kdiller.supernote.backup.Application"
